@@ -42,12 +42,16 @@ cc_curve_index <- function(cc_hist, index_ini = 1000, dates = NULL, target_matur
     lcpn <- length(cpn_times)
     cf <- rep(par_rate, lcpn) * c(cpn_times[1], diff(cpn_times))
     cf[lcpn] <- cf[lcpn] + 1
+    df0 <- 1/((1 + cpn_rates) ** cpn_times)
+    bond_pr0 <- sum(cf * df0)
+
     df <- 1/((1 + cpn_ratesi) ** cpn_timesi)
     bond_pr <- sum(cf * df)
+    bond_ret <- bond_pr/bond_pr0
 
     bond_exec_pr <- bond_pr + bond_pr * slippage/10000
     tc <- index_val[i-1] * (bond_exec_pr - bond_pr)
-    index_val[i] <- index_val[i-1] * bond_pr - tc
+    index_val[i] <- index_val[i-1] * bond_ret - tc
 
     tdf <- cpn_timesi * df
     mac_dur[i] <- round(-sum(cf * tdf)/bond_pr, 3)
