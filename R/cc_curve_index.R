@@ -11,7 +11,6 @@
 #' @return list 
 #' @export
 
-# Prueba
 
 cc_curve_index <- function(cc_hist, index_ini = 1000, dates = NULL, target_matur_in_days = 1095, 
                            bond_freq = 2, base = 365, slippage = 5, uniroot_interval = c(0, 0.3)){
